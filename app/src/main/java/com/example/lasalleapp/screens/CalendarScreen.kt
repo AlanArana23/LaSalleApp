@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.lasalleapp.components.DayItem
 import com.example.lasalleapp.components.ScreenTemplate
 import com.example.lasalleapp.ui.theme.LaSalleAppTheme
 import com.example.lasalleapp.utils.Screens
@@ -43,8 +44,8 @@ fun CalendarScreen(innerPadding : PaddingValues){
                     .fillMaxWidth()
                     .padding(top = 5.dp)
             ) {
-                items(10){
-                    Text(it.toString())
+                items(31){
+                    DayItem()
                 }
             }
         }
