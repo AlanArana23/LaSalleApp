@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -37,6 +39,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.lasalleapp.R
@@ -45,11 +49,12 @@ import com.example.lasalleapp.components.Widget
 import com.example.lasalleapp.ui.theme.LaSalleAppTheme
 import com.example.lasalleapp.utils.Cash
 import com.example.lasalleapp.utils.Logout
+import com.example.lasalleapp.utils.Screens
 import com.example.lasalleapp.utils.Task
 import com.example.lasalleapp.utils.newsList
 
 @Composable
-fun HomeScreen(innerPadding: PaddingValues){
+fun HomeScreen(innerPadding: PaddingValues, navController: NavController){
     val news = listOf(
         "https://www.lasallebajio.edu.mx/noticias/images/4719_3.jpg",
         "https://www.lasallebajio.edu.mx/noticias/images/4718_1.jpg",
@@ -152,16 +157,29 @@ fun HomeScreen(innerPadding: PaddingValues){
             Column(
                 modifier = Modifier.padding(20.dp)
             ) {
-                Text(text = stringResource(id = R.string.news),
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 26.sp
+                Text(
+                    text = stringResource(id = R.string.news),
+                    style = MaterialTheme.typography.titleLarge
                 )
                 LazyRow(
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    items(newsList){
-                        CardImage(image = it.image)
+                    items(newsList){ news ->
+                        CardImage(news = news){
+                            navController.navigate(Screens.NewsDetail.route+"/${it.id}")
+                        }
                     }
+                }
+                Text(text = "Comunidad",
+                    modifier = Modifier.padding(top = 20.dp),
+                    style = MaterialTheme.typography.titleLarge
+                )
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    modifier = Modifier.fillMaxWidth().height(500.dp)
+
+                ) {
+
                 }
             }
         }
@@ -175,7 +193,8 @@ fun HomeScreen(innerPadding: PaddingValues){
 )
 @Composable
 fun HomeScreenPreview(){
+    val navController = rememberNavController()
     LaSalleAppTheme{
-        HomeScreen(innerPadding = PaddingValues(0.dp))
+        HomeScreen(innerPadding = PaddingValues(0.dp),navController = navController)
     }
 }

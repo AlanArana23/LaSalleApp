@@ -27,10 +27,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHost
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.findNavController
+import androidx.navigation.navArgument
 import com.example.lasalleapp.screens.CalendarScreen
 import com.example.lasalleapp.screens.GradesScreen
 import com.example.lasalleapp.screens.HomeScreen
@@ -83,6 +85,7 @@ class MainActivity : ComponentActivity() {
                                     )
                                     Text(
                                         text = bottomNavigationItem.title,
+                                        style = MaterialTheme.typography.bodySmall,
                                         color = if ( selectedItemIndex == index ) Color.White else Color.White.copy(
                                             alpha = 0.5f
                                         ),
@@ -95,7 +98,7 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     NavHost(navController = navController, startDestination = Screens.Home.route) {
                         composable(route = Screens.Home.route) {
-                            HomeScreen(innerPadding = innerPadding)
+                            HomeScreen(innerPadding = innerPadding, navController = navController)
                         }
                         composable(route = Screens.Calendar.route){
                             CalendarScreen(innerPadding = innerPadding)
@@ -106,8 +109,16 @@ class MainActivity : ComponentActivity() {
                         composable(route = Screens.Settings.route){
                             SettingsScreen(innerPadding = innerPadding)
                         }
-                        composable(route = Screens.NewsDetail.route){
-                            NewsDetailScreen(innerPadding = innerPadding)
+                        composable(route = Screens.NewsDetail.route+"/{id}",
+                            arguments = listOf(
+                                navArgument("id"){
+                                    type = NavType.IntType
+                                    nullable = false
+                                }
+                            )
+                        ){
+                            val id = it.arguments?.getInt("id",0) ?: 0
+                            NewsDetailScreen(newsId=id,innerPadding = innerPadding)
                         }
                     }
                 }
