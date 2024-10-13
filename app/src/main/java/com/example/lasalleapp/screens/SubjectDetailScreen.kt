@@ -1,32 +1,51 @@
 package com.example.lasalleapp.screens
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.lasalleapp.components.ScreenTemplate
+import com.example.lasalleapp.models.Materia
+import com.example.lasalleapp.models.Parcial
 
 @Composable
-fun SubjectDetailScreen(subjectName: String, innerPadding: PaddingValues) {
-    // Supongamos que estas son las calificaciones de los tres parciales
-    val partialGrades = mapOf(
-        "Matemáticas" to listOf(8.0, 8.5, 9.0),
-        "Programación" to listOf(9.0, 9.2, 8.8),
-        "Redes" to listOf(9.3, 9.5, 9.1)
+fun SubjectDetailScreen(materiaId: Int) {
+    // Simulamos la obtención de los datos de los parciales según el id de la materia
+    val materia = getMateriaPorId(materiaId)
+    val parciales: List<Parcial> = listOf(
+        Parcial(nombre = "Primer Parcial", calificacion = 8.0),
+        Parcial(nombre = "Segundo Parcial", calificacion = 9.0),
+        Parcial(nombre = "Tercer Parcial", calificacion = 9.5)
     )
 
-    val grades = partialGrades[subjectName] ?: listOf()
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center, // Centrar verticalmente los parciales
+        horizontalAlignment = Alignment.CenterHorizontally // Centrar horizontalmente los textos
+    ) {
+        Text(text = "Detalles de ${materia.nombre}", style = MaterialTheme.typography.titleMedium)
 
-    ScreenTemplate(innerPadding = innerPadding, header = {
-        Text(text = "Calificaciones de $subjectName")
-    }, body = {
-        Column(modifier = Modifier.padding(16.dp)) {
-            grades.forEachIndexed { index, grade ->
-                Text(text = "Parcial ${index + 1}: $grade")
-            }
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Mostrar calificaciones de los parciales centradas
+        parciales.forEach { parcial ->
+            Text(
+                text = "${parcial.nombre}: ${parcial.calificacion}",
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
         }
-    })
+    }
+}
+
+fun getMateriaPorId(id: Int): Materia {
+    return when (id) {
+        1 -> Materia("Programación Jetpack Compose", 8.5)
+        2 -> Materia("Modelado de Imágenes", 9.3)
+        3 -> Materia("Redes de Área Local", 8.7)
+        else -> Materia("Procesos Tecnológicos", 0.0)
+    }
 }
