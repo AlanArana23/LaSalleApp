@@ -30,6 +30,7 @@ import androidx.navigation.NavHost
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.findNavController
 import androidx.navigation.navArgument
@@ -53,44 +54,53 @@ class MainActivity : ComponentActivity() {
             var selectedItemIndex by rememberSaveable {
                 mutableStateOf(0)
             }
+            val bottomNavRoutes = listOf(
+                Screens.Home.route,
+                Screens.Grades.route,
+                Screens.Settings.route,
+                Screens.Calendar.route
+            )
             LaSalleAppTheme {
+                val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     bottomBar = {
-                        AnimatedNavigationBar(
-                            selectedIndex = selectedItemIndex,
-                            modifier = Modifier.height(90.dp),
-                            barColor = MaterialTheme.colorScheme.primary,
-                            ballColor = MaterialTheme.colorScheme.primary,
-                            cornerRadius = shapeCornerRadius(cornerRadius = 34.dp)
-                        ) {
-                            bottomNavBarItems.forEachIndexed { index, bottomNavigationItem ->
-                                Column (
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                    verticalArrangement = Arrangement.Center,
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .clickable {
-                                            selectedItemIndex = index
-                                            navController.navigate(bottomNavigationItem.route)
-                                        }
-                                ){
-                                    Icon(
-                                        imageVector = bottomNavigationItem.icon,
-                                        contentDescription = bottomNavigationItem.title,
-                                        tint = if ( selectedItemIndex == index ) Color.White else Color.White.copy(
-                                            alpha = 0.5f
-                                        ),
-                                        modifier = Modifier.size(26.dp)
-                                    )
-                                    Text(
-                                        text = bottomNavigationItem.title,
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color = if ( selectedItemIndex == index ) Color.White else Color.White.copy(
-                                            alpha = 0.5f
-                                        ),
-                                    )
+                        if (currentRoute in bottomNavRoutes){
+                            AnimatedNavigationBar(
+                                selectedIndex = selectedItemIndex,
+                                modifier = Modifier.height(90.dp),
+                                barColor = MaterialTheme.colorScheme.primary,
+                                ballColor = MaterialTheme.colorScheme.primary,
+                                cornerRadius = shapeCornerRadius(cornerRadius = 34.dp)
+                            ) {
+                                bottomNavBarItems.forEachIndexed { index, bottomNavigationItem ->
+                                    Column (
+                                        horizontalAlignment = Alignment.CenterHorizontally,
+                                        verticalArrangement = Arrangement.Center,
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .clickable {
+                                                selectedItemIndex = index
+                                                navController.navigate(bottomNavigationItem.route)
+                                            }
+                                    ){
+                                        Icon(
+                                            imageVector = bottomNavigationItem.icon,
+                                            contentDescription = bottomNavigationItem.title,
+                                            tint = if ( selectedItemIndex == index ) Color.White else Color.White.copy(
+                                                alpha = 0.5f
+                                            ),
+                                            modifier = Modifier.size(26.dp)
+                                        )
+                                        Text(
+                                            text = bottomNavigationItem.title,
+                                            style = MaterialTheme.typography.bodySmall,
+                                            color = if ( selectedItemIndex == index ) Color.White else Color.White.copy(
+                                                alpha = 0.5f
+                                            ),
+                                        )
 
+                                    }
                                 }
                             }
                         }
