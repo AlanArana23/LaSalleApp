@@ -3,16 +3,7 @@ package com.example.lasalleapp.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -29,17 +20,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.lasalleapp.R
+import com.example.lasalleapp.utils.Screens
 
 @Composable
-fun SettingsScreen(innerPadding: PaddingValues, onChangePasswordClick: () -> Unit, onChangeThemeClick: () -> Unit) {
+fun SettingsScreen(innerPadding: PaddingValues, navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(innerPadding)
             .background(MaterialTheme.colorScheme.background)
     ) {
-        // Header: Información del alumno
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -75,20 +67,20 @@ fun SettingsScreen(innerPadding: PaddingValues, onChangePasswordClick: () -> Uni
             }
         }
 
-        // Opciones de configuración
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Cambiar Contraseña
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(8.dp))
                     .background(Color.LightGray)
-                    .clickable { onChangePasswordClick() }
+                    .clickable {
+                        navController.navigate(Screens.ChangePassword.route) // Navegar a pantalla en blanco
+                    }
                     .padding(16.dp)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -105,13 +97,14 @@ fun SettingsScreen(innerPadding: PaddingValues, onChangePasswordClick: () -> Uni
                 }
             }
 
-            // Cambiar Tema de la Aplicación
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(8.dp))
                     .background(Color.LightGray)
-                    .clickable { onChangeThemeClick() }
+                    .clickable {
+                        navController.navigate(Screens.ChangeTheme.route) // Navegar a pantalla en blanco
+                    }
                     .padding(16.dp)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {

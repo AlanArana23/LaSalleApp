@@ -34,6 +34,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.findNavController
 import androidx.navigation.navArgument
+import com.example.lasalleapp.screens.BlankScreen
 import com.example.lasalleapp.screens.CalendarScreen
 import com.example.lasalleapp.screens.GradesScreen
 import com.example.lasalleapp.screens.HomeScreen
@@ -100,7 +101,6 @@ class MainActivity : ComponentActivity() {
                                                 alpha = 0.5f
                                             ),
                                         )
-
                                     }
                                 }
                             }
@@ -118,29 +118,28 @@ class MainActivity : ComponentActivity() {
                             GradesScreen(innerPadding = innerPadding)
                         }
                         composable(route = Screens.Payment.route) {
-                            PaymentScreen() // Llama a la pantalla de pagos que implementaste
+                            PaymentScreen()
                         }
                         composable(route = Screens.Settings.route) {
-                            SettingsScreen(
-                                innerPadding = innerPadding,
-                                onChangePasswordClick = {
-                                    navController.navigate("change_password")
-                                },
-                                onChangeThemeClick = {
-                                    navController.navigate("change_theme")
-                                }
-                            )
+                            SettingsScreen(innerPadding = innerPadding, navController = navController)
                         }
-                        composable(route = Screens.NewsDetail.route+"/{id}",
+
+                        composable(route = Screens.NewsDetail.route + "/{id}",
                             arguments = listOf(
-                                navArgument("id"){
+                                navArgument("id") {
                                     type = NavType.IntType
                                     nullable = false
                                 }
                             )
-                        ){
-                            val id = it.arguments?.getInt("id",0) ?: 0
-                            NewsDetailScreen(newsId=id,innerPadding = innerPadding)
+                        ) {
+                            val id = it.arguments?.getInt("id", 0) ?: 0
+                            NewsDetailScreen(newsId = id, innerPadding = innerPadding)
+                        }
+                        composable(route = "change_password") {
+                            BlankScreen(screenName = "Pantalla Cambiar Contraseña")
+                        }
+                        composable(route = "change_theme") {
+                            BlankScreen(screenName = "Pantalla Cambiar Tema")
                         }
                     }
                 }
