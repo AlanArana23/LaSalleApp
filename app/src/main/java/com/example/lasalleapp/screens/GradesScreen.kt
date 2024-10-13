@@ -89,6 +89,7 @@ fun GradesList(navController: NavController) {
         Materia(nombre = "Administracion de Base de Datos", promedio = 9.9),
         Materia(nombre = "Procesos Tecnologicos", promedio = 9.0),
         Materia(nombre = "Python", promedio = 9.3),
+        Materia(nombre = "Promedio Acumulado", promedio = 9.1),
     )
 
     Column(modifier = Modifier.padding(16.dp)) {
