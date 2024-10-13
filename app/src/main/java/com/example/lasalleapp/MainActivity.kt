@@ -116,8 +116,16 @@ class MainActivity : ComponentActivity() {
                         composable(route = Screens.Grades.route){
                             GradesScreen(innerPadding = innerPadding)
                         }
-                        composable(route = Screens.Settings.route){
-                            SettingsScreen(innerPadding = innerPadding)
+                        composable(route = Screens.Settings.route) {
+                            SettingsScreen(
+                                innerPadding = innerPadding,
+                                onChangePasswordClick = {
+                                    navController.navigate("change_password")
+                                },
+                                onChangeThemeClick = {
+                                    navController.navigate("change_theme")
+                                }
+                            )
                         }
                         composable(route = Screens.NewsDetail.route+"/{id}",
                             arguments = listOf(
