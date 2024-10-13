@@ -38,6 +38,7 @@ import com.example.lasalleapp.screens.CalendarScreen
 import com.example.lasalleapp.screens.GradesScreen
 import com.example.lasalleapp.screens.HomeScreen
 import com.example.lasalleapp.screens.NewsDetailScreen
+import com.example.lasalleapp.screens.PaymentScreen
 import com.example.lasalleapp.screens.SettingsScreen
 import com.example.lasalleapp.ui.theme.LaSalleAppTheme
 import com.example.lasalleapp.utils.Screens
@@ -115,6 +116,9 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = Screens.Grades.route){
                             GradesScreen(innerPadding = innerPadding)
+                        }
+                        composable(route = Screens.Payment.route) {
+                            PaymentScreen() // Llama a la pantalla de pagos que implementaste
                         }
                         composable(route = Screens.Settings.route) {
                             SettingsScreen(

@@ -14,25 +14,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.AlignmentLine
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.lasalleapp.ui.theme.GrayDark
 import com.example.lasalleapp.ui.theme.GrayLight
 import com.example.lasalleapp.ui.theme.LaSalleAppTheme
-import org.w3c.dom.Text
 
 @Composable
-fun Widget(icon : ImageVector, text: String){
+fun Widget(icon: ImageVector, text: String, modifier: Modifier = Modifier) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .size(90.dp)
             .clip(RoundedCornerShape(16.dp))
             .background(GrayLight),
         contentAlignment = Alignment.Center
-    ){
+    ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -54,7 +50,7 @@ fun Widget(icon : ImageVector, text: String){
 
 @Preview
 @Composable
-fun WidgetPreview(){
+fun WidgetPreview() {
     LaSalleAppTheme {
         Widget(icon = Icons.Default.Home, text = "Inicio")
     }
