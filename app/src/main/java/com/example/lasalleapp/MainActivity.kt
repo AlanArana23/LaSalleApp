@@ -157,12 +157,54 @@ fun SubjectDetailScreen(subjectName: String) {
         Parcial(nombre = "Tercer Parcial", calificacion = 9.5)
     )
 
-    Column(modifier = Modifier.padding(16.dp)) {
-        Text(text = "Detalles de $subjectName", style = MaterialTheme.typography.titleMedium)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.primary)
+                .padding(20.dp)
+        ) {
+            Column {
+                Text(
+                    text = subjectName,
+                    color = Color.White,
+                    fontSize = 24.sp,
+                    fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
+                )
+                Text(
+                    text = "Detalles del curso",
+                    color = Color.White,
+                    fontSize = 16.sp
+                )
+            }
+        }
+
         Spacer(modifier = Modifier.height(16.dp))
 
-        parciales.forEach { parcial ->
-            Text(text = "${parcial.nombre}: ${parcial.calificacion}")
+        Column(modifier = Modifier.padding(16.dp)) {
+            parciales.forEach { parcial ->
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                ) {
+                    Text(
+                        text = parcial.nombre,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "Calificación: ${parcial.calificacion}",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
+                    )
+                }
+            }
         }
     }
 }
